@@ -21,7 +21,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <BrowserRouter basename="/finale-control-center">
         <AppLayout>
           <Routes>
             <Route path="/" element={<Dashboard />} />
