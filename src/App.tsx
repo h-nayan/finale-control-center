@@ -5,7 +5,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AppLayout } from "@/components/AppLayout";
-import Login from "./pages/Login"; // Ensure this file exists in src/pages/Login.tsx
+import Login from "./pages/Login"; 
 import Dashboard from "./pages/Dashboard";
 import WeeklyTracker from "./pages/WeeklyTracker";
 import ProblemLog from "./pages/ProblemLog";
@@ -19,17 +19,14 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const App = () => {
-  // Check if the user is already authenticated in this browser
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    localStorage.getItem("finale_auth") === "true"
-  );
+  // CHANGED: Initialized to false so it resets on every refresh
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // If NOT authenticated, show the Login screen only
+  // If NOT authenticated, show the Login screen
   if (!isAuthenticated) {
     return <Login onAuth={() => setIsAuthenticated(true)} />;
   }
 
-  // If authenticated, show the dashboard
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
