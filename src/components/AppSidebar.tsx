@@ -23,7 +23,9 @@ const links = [
 
 export function AppSidebar() {
   return (
-    <aside className="fixed left-0 top-0 h-screen w-40 border-r border-border bg-card flex flex-col z-50">
+    // Removed 'fixed', 'top-0', 'left-0', 'z-50', and 'w-40'
+    // Added 'h-full' and 'w-full' so it fills the container provided by AppLayout
+    <div className="h-full w-full border-r border-border bg-card flex flex-col">
       <div className="p-3 border-b border-border">
         <span className="text-xs font-bold tracking-widest text-primary">FINALE</span>
         <span className="text-xs text-muted-foreground ml-1">v2.0</span>
@@ -42,6 +44,6 @@ export function AppSidebar() {
           </NavLink>
         ))}
       </nav>
-    </aside>
+    </div>
   );
 }
