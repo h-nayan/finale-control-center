@@ -7,25 +7,22 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   return (
-    // min-h-screen ensures the background stays dark top to bottom
-    <div className="flex min-h-screen w-full bg-background text-foreground">
+    <div className="flex min-h-screen w-full bg-background overflow-x-hidden">
       
-      {/* 1. SIDEBAR: No fixed positioning here so it pushes the content naturally */}
+      {/* SIDEBAR: Relative positioning so it pushes the main content */}
       <aside 
-        className={`transition-all duration-300 ease-in-out border-r bg-card flex-shrink-0 ${
+        className={`transition-all duration-300 ease-in-out border-r bg-card flex-shrink-0 relative ${
           isSidebarOpen ? "w-64" : "w-0"
         }`}
       >
-        {/* Overflow-hidden prevents the sidebar text from 'leaking' out while closing */}
-        <div className="w-64 h-full overflow-hidden">
+        {/* We keep the inner div at 64 so the content doesn't 'squish' while sliding */}
+        <div className={`w-64 h-full ${!isSidebarOpen && "invisible"}`}>
           <AppSidebar />
         </div>
       </aside>
 
-      {/* 2. MAIN CONTENT AREA */}
+      {/* MAIN CONTENT: flex-1 makes it take up all remaining space */}
       <div className="flex-1 flex flex-col min-w-0">
-        
-        {/* HEADER */}
         <header className="h-14 border-b flex items-center px-4 bg-background/95 backdrop-blur sticky top-0 z-40">
           <Button
             variant="ghost"
@@ -36,12 +33,11 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             {isSidebarOpen ? <ChevronLeft className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </Button>
           <span className="ml-4 font-bold text-xs uppercase tracking-widest text-primary">
-            FINALE V2.0
+            Finale v2.0
           </span>
         </header>
 
-        {/* PAGE CONTENT: Removed large margins to fill the space */}
-        <main className="p-4 md:p-6 lg:p-8 overflow-y-auto">
+        <main className="p-4 md:p-6 lg:p-8">
           {children}
         </main>
       </div>
