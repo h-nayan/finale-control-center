@@ -10,7 +10,7 @@ export default function Login({ onAuth }: { onAuth: () => void }) {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     // Replace '2105' with whatever secret key you want
-    if (password === "2105") {
+    if (password === "082107") {
       localStorage.setItem("finale_auth", "true");
       onAuth();
     } else {
