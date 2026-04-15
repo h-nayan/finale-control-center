@@ -1,42 +1,46 @@
 import { useState } from "react";
 import { AppSidebar } from "./AppSidebar";
-import { Menu, ChevronLeft } from "lucide-react"; // Nice icons for the toggle
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <div className="min-h-screen flex">
-      {/* Sidebar Container */}
-      <div 
-        className={`fixed inset-y-0 left-0 z-50 transition-all duration-300 ${
-          isOpen ? "w-40" : "w-0 -left-40"
+    <div className="flex min-h-screen w-full bg-background">
+      {/* SIDEBAR CONTAINER */}
+      <aside 
+        className={`bg-card border-r transition-all duration-300 ease-in-out flex-shrink-0 relative overflow-hidden ${
+          isOpen ? "w-64" : "w-0 border-none"
         }`}
       >
-        <AppSidebar />
-      </div>
-
-      {/* Main Content */}
-      <main 
-        className={`flex-1 transition-all duration-300 p-4 min-h-screen ${
-          isOpen ? "ml-40" : "ml-0"
-        }`}
-      >
-        {/* Toggle Button */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="fixed top-4 left-4 z-50 bg-background border shadow-sm"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <ChevronLeft className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-        </Button>
-
-        <div className="mt-12">
-          {children}
+        {/* We keep this div at 64 (w-64) so the sidebar content doesn't squish while closing */}
+        <div className="w-64 h-full">
+          <AppSidebar />
         </div>
-      </main>
+      </aside>
+
+      {/* MAIN CONTENT */}
+      <div className="flex-1 flex flex-col min-w-0">
+        <header className="h-14 border-b flex items-center px-4 bg-background/95 backdrop-blur sticky top-0 z-40">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsOpen(!isOpen)}
+            className="hover:bg-accent"
+          >
+            {/* If closed, show Menu; if open, show X */}
+            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </Button>
+          <span className="ml-4 font-bold text-xs uppercase tracking-widest text-primary">
+            Finale v2.0
+          </span>
+        </header>
+
+        <main className="p-4 md:p-6 lg:p-8">
+          {children}
+        </main>
+      </div>
     </div>
   );
 }
